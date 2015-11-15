@@ -6,19 +6,25 @@ Automate importing and exporting of data from Quickbase applications using post 
 
 Add this line to your application's Gemfile:
 
-    gem 'quickbase_sync'
+```ruby
+    gem quickbase_sync
+```
 
 And then execute:
 
+```ruby
     $ bundle
+```
 
 Or install it yourself as:
 
+```ruby
     $ gem install quickbase_sync
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+
 
 ## Contributing
 
