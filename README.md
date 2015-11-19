@@ -22,9 +22,21 @@ Or install it yourself as:
     $ gem install quickbase_sync
 ```
 
-## Usage
+## Setup
 
+Setup the initializers, config files, and structure by:
 
+```ruby
+$ quickbase_sync install
+```
+
+The following files will be generated for you:
+
+```ruby
+/config/secrets.yml
+/config/quickbase_sync_tables
+/config/initializers/quickbase_sync.rb
+````
 
 ## Contributing
 
