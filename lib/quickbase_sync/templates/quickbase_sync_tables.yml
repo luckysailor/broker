@@ -1,0 +1,22 @@
+# Add Quickbase Table Configuration here
+#
+# Give each app an easy to remember/type name for quickbase_sync to use
+# Tables should also be given a simple short name
+#
+# This config file will be used to generate the sync queue and to connect to the corresponding apps in quickbase
+# Don't check this into version control, keep this private
+#
+# EXAMPLES
+#
+tracker:
+  name: Job Tracker
+  token:  your_apps_token_for_tracker
+  tables:
+    main:  table_dbid
+    people:  table_dbid
+billings:
+  name:  Financial Billings
+  token:  your_apps_token_for_billings
+  tables:
+    projects:  table_dbid
+    pace:  table_dbid

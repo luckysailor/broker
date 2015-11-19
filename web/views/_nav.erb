@@ -7,11 +7,11 @@
       <% QuickbaseSync::Web.default_tabs.each do |title, url| %>
         <% if url == '' %>
           <li class="<%= current_path == url ? 'active' : '' %>">
-            <a href="<%= root_path %><%= url %>"><%= t(title) %></a>
+            <a href="<%= root_path %><%= url %>"><%= title %></a>
           </li>
         <% else %>
           <li class="<%= current_path.start_with?(url) ? 'active' : '' %>">
-            <a href="<%= root_path %><%= url %>"><%= t(title) %></a>
+            <a href="<%= root_path %><%= url %>"><%= title %></a>
           </li>
         <% end %>
       <% end %>

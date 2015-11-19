@@ -1,10 +1,16 @@
 #!/usr/bin/env ruby
 
+require 'rubygems'
+
 begin
-  run QuickbaseSync::Web
-rescue => e
-  raise e if $DEBUG
-  STDERR.puts e.message
-  STDERR.puts e.backtrace.join("\n")
-  exit 1
+  require 'quickbase_sync/cli'
+rescue LoadError => e
+  warn 'Could not load "quickbase_sync/cli"'
+  exit -1
 end
+
+QuickbaseSync::CLI.start
+
+
+
+ 
