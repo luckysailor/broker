@@ -36,7 +36,7 @@ module QuickbaseSync
   end
   
   def self.launched?
-    defined?(QuickbaseSync::CLI)
+    defined?(QuickbaseSync::Launcher)
   end
   
   def self.config_files

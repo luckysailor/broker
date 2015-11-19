@@ -39,7 +39,7 @@
               <p class="navbar-text" style="color:white;">QuickbaseSync v<%= QuickbaseSync::VERSION %></p>
             </li>
             <li>
-              <p class="navbar-text">Tables: <%= QuickbaseSync.tables_path %></p>
+              <p class="navbar-text">Queue: <%= QuickbaseSync.queue %></p>
             </li>
             <li>
               <p class="navbar-text"><%= 'Time' %>: <%= Time.now.localtime.strftime('%H:%M:%S CST') %></p>
