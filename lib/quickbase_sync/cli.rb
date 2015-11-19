@@ -128,20 +128,7 @@ module QuickbaseSync
       elsif options[:web]
         puts "web service not implemented yet"
       end
-    end
-    
-    def handle_signal(sig)
-      case sig
-      when 'INT'
-        raise Interrupt
-      when 'TERM'
-        raise Interrupt
-      when 'USR1'
-      when 'USR2'
-      when 'TTIN'
-      end
-    end
-    
+    end            
     
     desc "welcome", "invite to quickbase_sync"
     def welcome
@@ -173,6 +160,18 @@ module QuickbaseSync
     end
     
     private
+    
+    def handle_signal(sig)
+      case sig
+      when 'INT'
+        raise Interrupt
+      when 'TERM'
+        raise Interrupt
+      when 'USR1'
+      when 'USR2'
+      when 'TTIN'
+      end
+    end
     
     def make_tree(base_path, folders=[])
       folders.each do |f|
