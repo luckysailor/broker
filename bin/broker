@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+begin
+  require 'broker/cli'
+rescue LoadError => e
+  warn 'Could not load "broker/cli"'
+  exit -1
+end
+
+Broker::CLI.start
+
+
+
+ 

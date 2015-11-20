@@ -1,10 +1,10 @@
-require 'quickbase_sync/utility'
+require 'broker/utility'
 
-module QuickbaseSync
+module Broker
   class Launcher
     
    def initialize
-     @poller = QuickbaseSync::Poller.new
+     @poller = Broker::Poller.new
      @finished = false     
    end
    
@@ -26,8 +26,8 @@ module QuickbaseSync
     
     def initialize
       @finished = false
-      @wait_time = QuickbaseSync.poll_interval
-      @folder = QuickbaseSync.queue
+      @wait_time = Broker.poll_interval
+      @folder = Broker.queue
     end
     
     def terminate

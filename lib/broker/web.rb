@@ -1,11 +1,11 @@
 require 'erb'
 require 'sinatra/base'
 
-require 'quickbase_sync/web_helpers'
-require 'quickbase_sync/web_routes'
+require 'broker/web_helpers'
+require 'broker/web_routes'
 
 
-module QuickbaseSync
+module Broker
   class Web < Sinatra::Base
     
     set :root, File.expand_path(File.dirname(__FILE__) + "/../../web")
@@ -14,7 +14,7 @@ module QuickbaseSync
     
     helpers WebHelpers
     
-    register QuickbaseSync::WebRoutes
+    register Broker::WebRoutes
     
     DEFAULT_TABS = {
       "Dashboard" => '',

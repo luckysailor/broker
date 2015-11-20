@@ -1,7 +1,7 @@
-require 'quickbase_sync'
-require 'quickbase_sync/client/quickbase_client'
+require 'broker'
+require 'broker/client/quickbase_client'
 
-module QuickbaseSync
+module Broker
   class Session
     
     attr_reader :client, :app
@@ -10,11 +10,11 @@ module QuickbaseSync
       @app        = opt[:app]
       
       credentials = {
-        "username" => QuickbaseSync.secrets['USER'],
-        "password" => QuickbaseSync.secrets['PASSWORD'],
+        "username" => Broker.secrets['USER'],
+        "password" => Broker.secrets['PASSWORD'],
         "appname"  => @app,
-        "org"      => QuickbaseSync.secrets['ORG'],
-        "apptoken" => opt[:token] || QuickbaseSync.tables[@app]['token']
+        "org"      => Broker.secrets['ORG'],
+        "apptoken" => opt[:token] || Broker.tables[@app]['token']
       }
       
       @client = QuickBase::Client.init(credentials)
@@ -22,7 +22,7 @@ module QuickbaseSync
     
     def get_field_names(table)
       table &&= table.to_s
-      db = QuickbaseSync.tables[@app]['tables'][table]
+      db = Broker.tables[@app]['tables'][table]
       db && @client.getFieldNames(db, "", true)
     end
     

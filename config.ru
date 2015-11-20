@@ -1,5 +1,5 @@
-require 'quickbase_sync'
-require 'quickbase_sync/web'
+require 'broker'
+require 'broker/web'
 
-QuickbaseSync::Application.boot!
-run QuickbaseSync::Web
+Broker::Application.boot!
+run Broker::Web

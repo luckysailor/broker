@@ -1,7 +1,7 @@
-require 'quickbase_sync/import'
-require 'quickbase_sync/export'
+require 'broker/import'
+require 'broker/export'
 
-module QuickbaseSync
+module Broker
   module WebRoutes
     def self.registered(app)
       app.get "/" do
@@ -18,7 +18,7 @@ module QuickbaseSync
         @fields = []
         @header = "Exports"
         if db && app
-          qb = QuickbaseSync::Export.new(:app => app)
+          qb = Broker::Export.new(:app => app)
           @fields = qb.get_field_names(db)
           @header = "App: #{app.downcase} | Table: #{db.capitalize}"
           qb.sign_out

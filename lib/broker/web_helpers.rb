@@ -1,6 +1,6 @@
 require 'uri'
 
-module QuickbaseSync
+module Broker
   module WebHelpers
     def root_path
       "#{env['SCRIPT_NAME']}/"

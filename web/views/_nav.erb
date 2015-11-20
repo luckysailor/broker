@@ -1,10 +1,10 @@
 <div class="navbar-inner">
   <div class="container">
     <a class="navbar-brand" href="<%= root_path %>">
-      <%= QuickbaseSync::NAME %>
+      <%= Broker::NAME %>
     </a>
     <ul class="nav navbar-nav">
-      <% QuickbaseSync::Web.default_tabs.each do |title, url| %>
+      <% Broker::Web.default_tabs.each do |title, url| %>
         <% if url == '' %>
           <li class="<%= current_path == url ? 'active' : '' %>">
             <a href="<%= root_path %><%= url %>"><%= title %></a>

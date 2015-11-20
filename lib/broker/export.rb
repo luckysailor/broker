@@ -1,7 +1,7 @@
-require 'quickbase_sync/session'
+require 'broker/session'
 
-module QuickbaseSync
-  class Export < QuickbaseSync::Session
+module Broker
+  class Export < Broker::Session
     
    def initialize(opt={})
      super(opt)

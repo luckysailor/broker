@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title><%= QuickbaseSync::NAME %></title>
+    <title><%= Broker::NAME %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link href="<%= root_path %>stylesheets/bootstrap.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="<%= root_path %>stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
@@ -36,10 +36,10 @@
         <div class="container">
           <ul class="nav">
             <li>
-              <p class="navbar-text" style="color:white;">QuickbaseSync v<%= QuickbaseSync::VERSION %></p>
+              <p class="navbar-text" style="color:white;">Broker v<%= Broker::VERSION %></p>
             </li>
             <li>
-              <p class="navbar-text">Queue: <%= QuickbaseSync.queue %></p>
+              <p class="navbar-text">Queue: <%= Broker.queue %></p>
             </li>
             <li>
               <p class="navbar-text"><%= 'Time' %>: <%= Time.now.localtime.strftime('%H:%M:%S CST') %></p>

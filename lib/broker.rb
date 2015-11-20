@@ -1,15 +1,15 @@
-require 'quickbase_sync/version'
+require 'broker/version'
 require 'yaml'
 
-module QuickbaseSync
-  NAME = "Quickbase Sync"
+module Broker
+  NAME = "Broker: Quickbase Data Intake"
   
   DEFAULTS = {
     secrets_path: 'config/secrets.yml',
-    tables_path: 'config/quickbase_sync_tables.yml',
-    initializer: 'config/initializers/quickbase_sync.rb',
+    tables_path: 'config/quickbase_tables.yml',
+    initializer: 'config/initializers/broker.rb',
     poll_interval: 300,
-    queue: 'quickbase_sync_queue',
+    queue: 'broker_queue',
     file_ext: :csv
   }
   
@@ -36,7 +36,7 @@ module QuickbaseSync
   end
   
   def self.launched?
-    defined?(QuickbaseSync::Launcher)
+    defined?(Broker::Launcher)
   end
   
   def self.config_files
@@ -111,5 +111,5 @@ module QuickbaseSync
     
 end
 
-require 'quickbase_sync/application'
+require 'broker/application'
 

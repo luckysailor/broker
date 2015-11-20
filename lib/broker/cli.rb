@@ -1,6 +1,6 @@
 require 'thor'
 
-module QuickbaseSync
+module Broker
   class CLI < Thor
     include Thor::Actions
     
@@ -8,16 +8,16 @@ module QuickbaseSync
       File.dirname(__FILE__) + "/templates"
     end
     
-    desc "install", "install and configure quickbase_sync"
+    desc "install", "install and configure broker"
     def install
-      require 'quickbase_sync'
+      require 'broker'
       unless already_installed?
         inject_initializer
         inject_secrets
         inject_tables
         welcome
       else
-        say "QuickbaseSync is already Installed/Setup!"
+        say "Broker is already Installed/Setup!"
       end
     end
     
@@ -38,23 +38,23 @@ module QuickbaseSync
                   aliases: "-u",
                   banner: "Generate your queue folder structure"
     def queue
-      require 'quickbase_sync'
-      empty_dir = !Dir.exists?(QuickbaseSync.queue)
+      require 'broker'
+      empty_dir = !Dir.exists?(Broker.queue)
       
       if options[:create] && empty_dir
-        FileUtils.mkdir QuickbaseSync.queue
+        FileUtils.mkdir Broker.queue
         say "Your Q has been created at:"
-        puts "#{QuickbaseSync.queue}"
+        puts "#{Broker.queue}"
       end
       
       if options[:update] && !empty_dir
-        base_path = "#{QuickbaseSync.queue}"
-        roots     = QuickbaseSync.tables.keys
+        base_path = "#{Broker.queue}"
+        roots     = Broker.tables.keys
         tables    = []
         
         make_tree(base_path, roots)
          
-        QuickbaseSync.tables.each do |key, val|
+        Broker.tables.each do |key, val|
           tables = val['tables'].keys
           make_tree("#{base_path}/#{key}", tables)
         end
@@ -63,23 +63,23 @@ module QuickbaseSync
     
     desc "inject_initializer", "add initializer"
     def inject_initializer
-      puts 'add initializer for quickbase_sync configuration'
-      copy_file "quickbase_sync.rb", "config/initializers/quickbase_sync.rb"
+      puts 'add initializer for broker configuration'
+      copy_file "broker.rb", "config/initializers/broker.rb"
     end
     
     desc "inject_secrets", "add secrets"
     def inject_secrets
-      puts 'add secrets yaml for quickbase_sync authentication environment variables'
+      puts 'add secrets yaml for broker authentication environment variables'
       copy_file "secrets.yml", "config/secrets.yml"
     end
     
     desc "inject_tables", "add table mapping"
     def inject_tables
-      puts 'add quickbase_sync_tables for setting up table mappings'
-      copy_file "quickbase_sync_tables.yml", "config/quickbase_sync_tables.yml"
+      puts 'add broker_tables for setting up table mappings'
+      copy_file "quickbase_tables.yml", "config/quickbase_tables.yml"
     end
     
-    desc "start", "boot up quickbase_sync service"
+    desc "start", "boot up broker service"
     method_option :standalone,
                   type: :boolean,
                   default: false,
@@ -92,7 +92,7 @@ module QuickbaseSync
                   banner: "Boots w/ web service"
     def start
       
-      require 'quickbase_sync'
+      require 'broker'
       
       if options[:standalone]
         
@@ -108,8 +108,8 @@ module QuickbaseSync
           end
         end
         
-        require 'quickbase_sync/launcher'
-        @launcher = QuickbaseSync::Launcher.new
+        require 'broker/launcher'
+        @launcher = Broker::Launcher.new
         
         begin
           puts "launched with PID #{Process.pid}"
@@ -130,32 +130,32 @@ module QuickbaseSync
       end
     end            
     
-    desc "welcome", "invite to quickbase_sync"
+    desc "welcome", "invite to broker"
     def welcome
       say ""
       say ""
       say ""
       say "*************************************************"
       say "*************************************************"
-      say "QuickbaseSync Successfully Installed!"
+      say "Broker Successfully Installed!"
       say "*************************************************"
       say ""
       say "Default Config files created for you"
       say ""
       say "You can change the config paths in:"
-      say "config/initializers/quickbase_sync.rb"
+      say "config/initializers/broker.rb"
       say ""
       say "1. Enter your Quickbase credentials in:"
       say "/config/secrets.yml"
       say ""
       say "2. Set up your Table Mappings in:"
-      say "/config/quickbase_sync_tables.yml"
+      say "/config/quickbase_tables.yml"
       say ""
       say "*************************************************"
       say ""
-      say "Update your QuickbaseSync Q by running:"
+      say "Update your Broker Q by running:"
       say ""
-      say "$ quickbase_sync update_q"
+      say "$ broker update_q"
       say ""
     end
     
@@ -187,7 +187,7 @@ module QuickbaseSync
     end
     
     def already_installed?
-      files = QuickbaseSync.config_files
+      files = Broker.config_files
       files.each do |f| 
         return false unless File.exists?(f)
       end && true

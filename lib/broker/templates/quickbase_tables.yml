@@ -1,6 +1,6 @@
 # Add Quickbase Table Configuration here
 #
-# Give each app an easy to remember/type name for quickbase_sync to use
+# Give each app an easy to remember/type name for broker to use
 # Tables should also be given a simple short name
 #
 # This config file will be used to generate the sync queue and to connect to the corresponding apps in quickbase
