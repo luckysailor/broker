@@ -46,7 +46,7 @@ module QuickbaseSync
         pause_first
         
         while !@finished
-          puts "Checking for new files in #{folder}"
+          puts "Checking for new files in #{@folder}"
           wait
         end
       end
