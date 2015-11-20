@@ -21,8 +21,20 @@ module Broker
     
   end
   
+  module Event
+    def register(arr)
+      unless arr.empty?
+        while !Broker.options[:enqueued].empty?
+          payload = Broker.options[:enqueued].shift
+          puts "#{payload.pkg.file} processed"
+        end
+      end
+    end
+  end
+  
   class Poller
     include Utility
+    include Broker::Event
     
     def initialize
       @finished  = false
@@ -47,7 +59,7 @@ module Broker
         pause_first
         
         while !@finished
-          @finder.check
+          register(@finder.check)
           wait
         end
       end
