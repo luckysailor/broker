@@ -117,7 +117,7 @@ module QuickbaseSync
           
           while readable_io = IO.select([io_read])
             signal = readable_io.first[0].gets.strip
-            handle_signal(signal)
+            catch_signal(signal)
           end
         rescue Interrupt
           puts "Shutting down"
@@ -161,7 +161,7 @@ module QuickbaseSync
     
     private
     
-    def handle_signal(sig)
+    def catch_signal(sig)
       case sig
       when 'INT'
         raise Interrupt

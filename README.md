@@ -1,13 +1,13 @@
-# QuickbaseSync
+# Broker
 
-Automate importing and exporting of data from Quickbase applications using post requests.
+Automate importing of data to Quickbase applications using a file queue
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-    gem quickbase_sync
+    gem broker
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ And then execute:
 Or install it yourself as:
 
 ```ruby
-    $ gem install quickbase_sync
+    $ gem install broker
 ```
 
 ## Setup
@@ -27,15 +27,15 @@ Or install it yourself as:
 Setup the initializers, config files, and structure by:
 
 ```ruby
-$ quickbase_sync install
+$ broker install
 ```
 
 The following files will be generated for you:
 
 ```ruby
 /config/secrets.yml
-/config/quickbase_sync_tables
-/config/initializers/quickbase_sync.rb
+/config/quickbase_tables
+/config/initializers/broker.rb
 ````
 
 ## Contributing
