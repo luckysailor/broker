@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.version       = Broker::VERSION
   gem.authors       = ["Shawn Henley"]
   gem.email         = ["shawn@luckysailor.net"]
-  gem.description   = gem.summary = "Automate the importing and exporting of data with Quickbase applications, using post requests."
+  gem.description   = gem.summary = "Simple utility to automate importing of data through the Quickbase API by polling a file queue"
   gem.homepage      = "https://github.com/luckysailor/broker"
   gem.license       = "MIT"
 
