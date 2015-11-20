@@ -39,17 +39,17 @@ module Broker
                   banner: "Generate your queue folder structure"
     def queue
       require 'broker'
-      empty_dir = !Dir.exists?(Broker.queue)
+      empty_dir = !Dir.exists?(Broker.options[:queue])
       
       if options[:create] && empty_dir
-        FileUtils.mkdir Broker.queue
+        FileUtils.mkdir Broker.options[:queue]
         say "Your Q has been created at:"
-        puts "#{Broker.queue}"
+        puts "#{Broker.options[:queue]}"
       end
       
       if options[:update] && !empty_dir
-        base_path = "#{Broker.queue}"
-        roots     = Broker.tables.keys
+        base_path = "#{Broker.options[:queue]}"
+        roots     = Broker.table_keys
         tables    = []
         
         make_tree(base_path, roots)

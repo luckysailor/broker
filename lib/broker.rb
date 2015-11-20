@@ -13,15 +13,16 @@ module Broker
     file_ext: :csv
   }
   
-  @@secrets_path    = @@secrets_path ||= DEFAULTS[:secrets_path]
-  @@tables_path 		= @@tables_path  ||= DEFAULTS[:tables_path]
-  @@initializer 		= @@initializer  ||= DEFAULTS[:initializer]
-  @@poll_interval		= @poll_interval ||= DEFAULTS[:poll_interval]
-  @@queue           = @@queue        ||= DEFAULTS[:queue]
-  @@file_ext        = @@file_ext     ||= DEFAULTS[:file_ext]
+  def self.load_config(dest)
+    YAML.load_file(dest) rescue {}
+  end
   
-  @@secrets   			= YAML.load_file(@@secrets_path) rescue {}
-  @@tables    			= YAML.load_file(@@tables_path) rescue {}
+  @@secrets = @@secrets ||= load_config(DEFAULTS[:secrets_path])
+  @@tables  = @@tables  ||=load_config(DEFAULTS[:tables_path])
+  
+  def self.options
+    @options ||= DEFAULTS.dup
+  end
   
   def self.lookup_tbid(opt={})
     tables[opt[:app]]['tables'][opt[:table]]
@@ -40,75 +41,54 @@ module Broker
   end
   
   def self.config_files
-    [secrets_path, tables_path, initializer]
-  end
-  
-  # def self.options
-#     @options ||= DEFAULTS.dup
-#   end
-#
-#   def self.options=(opt)
-#     @options = opt
-#   end
-  
-  def self.poll_interval
-    @@poll_interval
-  end
-  
-  def self.poll_interval=(val)
-    @@poll_interval = val
-  end
-  
-  def self.queue
-    @@queue
-  end
-  
-  def self.queue=(val)
-    @@queue = val
-  end
-  
-  def file_ext
-    @@file_ext
-  end
-  
-  def file_ext=(val)
-    @@file_ext = val if [:csv, :tab].include? val
+    fs = [:secrets_path, :tables_path, :initializer]
+    options.select { |opt| fs.include? opt }.values
   end
   
   def self.secrets
     @@secrets
   end
   
-  def self.secrets_path
-    @@secrets_path
-  end
-  
-  def self.secrets_path=(val)
-    @@secrets_path = val
-    @@secrets   = YAML.load_file(@@secrets_path) rescue {}
-  end
-  
   def self.tables
     @@tables
   end
   
-  def self.tables_path
-    @@tables_path
+  def self.table_keys
+    tables.keys
   end
   
-  def self.tables_path=(val)
-    @@tables_path = val
-    @@tables = YAML.load_file(@@tables_path) rescue {}
-  end
-  
-  def self.initializer
-    @@initializer
-  end
+  # Initializer setter methods
+  # Loaded at runtime in initializers/broker.rb
+  # Broker.setup do |config|
+  #   config.secrets_path = /my/updated/path.yml
+  # end
   
   def self.initializer=(val)
-    @@initializer = val
+    options[:initializer] = val
   end
-    
+  
+  def self.secrets_path=(pa)
+    options[:secrets_path] = pa
+    @@secrets = load_config(pa)
+  end
+  
+  def self.tables_path=(pa)
+    options[:tables_path] = pa
+    @@tables = load_config(pa)
+  end
+  
+  def self.queue=(val)
+    options[:queue] = val
+  end
+  
+  def self.poll_interval=(val)
+    options[:poll_interval] = val
+  end
+  
+  def file_ext=(val)
+    options[:file_ext] = val if [:csv, :tab].include? val
+  end
+  
 end
 
 require 'broker/application'

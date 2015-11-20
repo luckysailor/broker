@@ -25,9 +25,10 @@ module Broker
     include Utility
     
     def initialize
-      @finished = false
-      @wait_time = Broker.poll_interval
-      @folder = Broker.queue
+      opt        = Broker.options
+      @finished  = false
+      @wait_time = opt[:poll_interval]
+      @folder    = opt[:queue]
     end
     
     def terminate

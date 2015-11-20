@@ -9,7 +9,7 @@ module Broker
     
     def self.boot!      
       puts "starting up"
-      puts "watching for files in #{Broker.queue}"
+      puts "watching for files in #{Broker.options[:queue]}"
     end
     
   end
