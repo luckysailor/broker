@@ -1,7 +1,7 @@
-require 'broker/session'
+require 'broker/qb/session'
 
 module Broker
-  class Export < Broker::Session
+  class Export < Broker::QB::Session
     
    def initialize(opt={})
      super(opt)

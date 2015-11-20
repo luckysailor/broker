@@ -1,11 +1,22 @@
-require 'broker'
-require 'broker/client/quickbase_client'
+require 'broker/qb/session'
 
 module Broker
-  class Import
+  module QB
+    class Import << Broker::QB::Session
    
+      def fire_event(payload)
+        @payload = payload
+        send(ext) if self.respond_to? ext
+      end
+      
+      def csv
+        importCSVFile(@payload.file, @payload.dbid)
+      end
+      
+      def txt
+        importTSVFile(@payload.file, @payload.dbid)
+      end
    
-   
-    
+    end
   end
 end

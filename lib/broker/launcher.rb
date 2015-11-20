@@ -25,10 +25,10 @@ module Broker
     include Utility
     
     def initialize
-      opt        = Broker.options
       @finished  = false
-      @wait_time = opt[:poll_interval]
-      @folder    = opt[:queue]
+      @wait_time = Broker.options[:poll_interval]
+      @folder    = Broker.options[:queue]
+      @finder		 = Broker::Finder.new
     end
     
     def terminate
@@ -47,7 +47,7 @@ module Broker
         pause_first
         
         while !@finished
-          puts "Checking for new files in #{@folder}"
+          @finder.check
           wait
         end
       end

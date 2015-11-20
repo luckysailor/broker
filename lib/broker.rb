@@ -10,7 +10,8 @@ module Broker
     initializer: 'config/initializers/broker.rb',
     poll_interval: 300,
     queue: 'broker_queue',
-    file_ext: :csv
+    file_ext: :csv,
+    enqueued: []
   }
   
   def self.load_config(dest)
@@ -26,6 +27,10 @@ module Broker
   
   def self.lookup_tbid(opt={})
     tables[opt[:app]]['tables'][opt[:table]]
+  end
+  
+  def self.lookup_appname(key)
+    tables[key]['name']
   end
   
   def self.path
@@ -92,4 +97,5 @@ module Broker
 end
 
 require 'broker/application'
+require 'broker/finder'
 
