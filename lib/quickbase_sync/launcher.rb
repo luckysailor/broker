@@ -27,6 +27,7 @@ module QuickbaseSync
     def initialize
       @finished = false
       @wait_time = QuickbaseSync.poll_interval
+      @folder = QuickbaseSync.queue
     end
     
     def terminate
@@ -45,7 +46,7 @@ module QuickbaseSync
         pause_first
         
         while !@finished
-          puts "polling for files"
+          puts "Checking for new files in #{folder}"
           wait
         end
       end

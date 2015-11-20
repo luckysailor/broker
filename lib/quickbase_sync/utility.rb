@@ -1,7 +1,7 @@
 module QuickbaseSync
   module Utility
    
-   def watchdog(last_words)
+   def watcher(last_words)
      yield
    rescue Exception => ex
      raise ex
@@ -9,7 +9,7 @@ module QuickbaseSync
    
    def safe_thread(name, &block)
      Thread.new do
-       watchdog(name, &block)
+       watcher(name, &block)
      end
    end
     
