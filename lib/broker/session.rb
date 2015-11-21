@@ -45,7 +45,7 @@ module Broker
         unless app_name == @client.dbname
           return app_name && change_app(app_name, name)
         end
-        false
+        true
       end
     
       def get_field_names(table)
