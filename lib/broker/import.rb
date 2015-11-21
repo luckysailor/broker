@@ -6,7 +6,7 @@ module Broker
    
       def fire_event(payload)
         @payload = payload
-        send(ext) if self.respond_to? ext
+        send(ext) if respond_to? ext
       end
       
       def csv

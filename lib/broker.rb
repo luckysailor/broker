@@ -1,4 +1,5 @@
 require 'broker/version'
+require 'broker/session'
 require 'yaml'
 
 module Broker
@@ -30,7 +31,7 @@ module Broker
   end
   
   def self.lookup_appname(key)
-    tables[key]['name']
+    tables[key.to_s]['name']
   end
   
   def self.path
@@ -97,5 +98,3 @@ module Broker
 end
 
 require 'broker/application'
-require 'broker/finder'
-

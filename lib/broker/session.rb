@@ -1,8 +1,7 @@
-
 require 'broker/client/quickbase_client'
 
 module Broker
-  module QB
+ # module QB
     class Session
       
       attr_reader :client, :app, :ext
@@ -12,7 +11,7 @@ module Broker
         @ext = Broker.options[:file_ext]
       
         credentials = {
-          "username" => Broker.secrets['USER'],
+          "username" => Broker.secrets['USERNAME'],
           "password" => Broker.secrets['PASSWORD'],
           "appname"  => @app,
           "org"      => Broker.secrets['ORG'],
@@ -21,8 +20,9 @@ module Broker
         
         begin
           @client = QuickBase::Client.init(credentials)
-        rescue
-          puts "Can't connect to Quickbase API"
+        rescue => e
+          puts e.message
+          #raise ArgumentError
         end
       end
       
@@ -30,8 +30,9 @@ module Broker
         @client.signOut
       end
       
-      def app=(name)
-        @app = name
+      def change_app_to(name)
+        app_name = Broker.lookup_appname(name)
+        app_name && make_change(app_name, name)
       end
     
       def get_field_names(table)
@@ -39,7 +40,14 @@ module Broker
         db = Broker.tables[@app]['tables'][table]
         db && @client.getFieldNames(db, "", true)
       end
-    
+      
+      private
+      
+      def make_change(app_name, app_key)
+        @app = app_key.to_s
+        @client.findDBByname(app_name)
+        @client.dbname == app_name
+      end
     end
-  end
+ # end
 end
