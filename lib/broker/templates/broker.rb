@@ -11,6 +11,9 @@ Broker.setup do |config|
   # Directory where your import files will be queued for import
   config.queue = 'broker_queue'
   
+  # Directory where your successful imported files will be moved
+  config.queue_complete = 'broker_processed'
+  
   # Uncomment to change the default file type to use for importing
   # [:csv, :tab]
   #config.file_ext = :csv

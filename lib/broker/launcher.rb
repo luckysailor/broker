@@ -1,15 +1,35 @@
 require 'broker/utility'
+require 'broker/queue'
 
 module Broker
   module Event
     def register(arr)
+      
       unless arr.empty?
-        while !Broker.options[:enqueued].empty?
-          payload = Broker.options[:enqueued].shift
-          puts "#{payload.pkg.file} processed"
+        begin
+          @session = Broker::Import.new(:app => Broker.any_app)
+        rescue ArgumentError => e
+          @failed = true
+          puts "Cant login to QB, invalid app name"
+          puts e.message
         end
+        @failed || transport
       end
+      
     end
+    
+    def transport 
+      while !@queue.empty?
+        payload = @queue.next
+        results = payload.commit(@session)
+        puts "#{results.inspect}"
+        @queue.success(payload)
+        # Need to handle failure and add payload to queues failed
+        # Need to handle success and move file out and alert queue
+      end
+      @session.sign_out
+    end
+    
   end
   
   class Launcher
@@ -34,13 +54,14 @@ module Broker
   
   class Poller
     include Utility
-    include Broker::Event
+    include Event
     
     def initialize
       @finished  = false
       @wait_time = Broker.options[:poll_interval]
       @folder    = Broker.options[:queue]
-      @finder		 = Broker::Finder.new
+      @queue     = Broker::Queue.new
+      @finder		 = Broker::Finder.new(@queue)
     end
     
     def terminate

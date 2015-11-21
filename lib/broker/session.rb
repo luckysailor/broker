@@ -7,7 +7,7 @@ module Broker
       attr_reader :client, :app, :ext
     
       def initialize(opt={})
-        @app = opt[:app]
+        @app = Broker.lookup_appname(opt[:app])
         @ext = Broker.options[:file_ext]
       
         credentials = {
@@ -48,7 +48,7 @@ module Broker
         true
       end
     
-      def get_field_names(table)
+      def field_names(table)
         table &&= table.to_s
         db = Broker.tables[@app]['tables'][table]
         db && @client.getFieldNames(db, "", true)

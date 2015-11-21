@@ -11,6 +11,7 @@ module Broker
     initializer: 'config/initializers/broker.rb',
     poll_interval: 300,
     queue: 'broker_queue',
+    queue_complete: 'broker_processed',
     file_ext: :csv,
     enqueued: []
   }
@@ -61,6 +62,10 @@ module Broker
   
   def self.table_keys
     tables.keys
+  end
+  
+  def self.any_app
+    table_keys.first
   end
   
   # Initializer setter methods

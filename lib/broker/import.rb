@@ -1,4 +1,4 @@
-require 'broker/qb/session'
+require 'broker/session'
 
 module Broker
   module QB

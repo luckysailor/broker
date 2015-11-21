@@ -1,16 +1,17 @@
-require 'broker/payload'
+require 'broker/queue'
 
 module Broker
   class Finder
   
-    def initialize
+    def initialize(q)
       opt = Broker.options
+      @queue = q
       @dir = File.join(opt[:queue], "**", "*.#{opt[:file_ext].to_s}")
     end
 
     def check
     	files = get
-    	Broker::Payload.push(files) unless files.empty?
+    	@queue.push(files) unless files.empty?
     end
 
     private

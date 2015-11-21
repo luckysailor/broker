@@ -6,14 +6,10 @@ module Broker
     attr_reader :pkg
     
     class << self
-      
-      def push(paths)
-        paths.each { |p| parse(p) }
-      end
     
       def parse(single_path)
         
-        res = {
+        attrs = {
           file: single_path,
           dbid: nil,
           app: nil,
@@ -29,9 +25,9 @@ module Broker
         a = slots.pop        
         
         _id = Broker.lookup_tbid({app: a, table: t})
-        res[:dbid], res[:app], res[:app_key], res[:table] = _id, Broker.lookup_appname(a), a, t
+        attrs[:dbid], attrs[:app], attrs[:app_key], attrs[:table] = _id, Broker.lookup_appname(a), a, t
         
-        new(res).enqueue
+        new(attrs)
       end
       
       def chunk(arr)
@@ -47,14 +43,8 @@ module Broker
                             table: opt[:table])                  
     end
    
-   
     def commit(session)
-      results = session.fire_event(self)
-      puts "#{results.inspect}"
-    end
-
-    def enqueue
-     Broker.options[:enqueued] << self
+      session.fire_event(self)
     end
     
   end
