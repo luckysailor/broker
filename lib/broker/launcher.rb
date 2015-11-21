@@ -1,33 +1,39 @@
 require 'broker/utility'
 require 'broker/queue'
+require 'broker/import'
+require 'broker/finder'
 
 module Broker
   module Event
     def register(arr)
-      
+      arr || return
+      puts "Event has been registered with: #{arr.inspect}"
       unless arr.empty?
         begin
-          @session = Broker::Import.new(:app => Broker.any_app)
+          session = Broker::Import.new(:app => Broker.any_app)
         rescue ArgumentError => e
           @failed = true
           puts "Cant login to QB, invalid app name"
           puts e.message
         end
-        @failed || transport
+        @failed || transport(session)
       end
       
     end
     
-    def transport 
+    def transport(session)
       while !@queue.empty?
         payload = @queue.next
-        results = payload.commit(@session)
+        results = payload.commit(session)
         puts "#{results.inspect}"
         @queue.success(payload)
         # Need to handle failure and add payload to queues failed
         # Need to handle success and move file out and alert queue
       end
-      @session.sign_out
+      puts "Session Terminated: #{session.sign_out}"
+      puts "Processed: #{@queue.processed}"
+      puts "Pending: #{@queue.pending.inspect}"
+      puts "Failed: #{@queue.failed.inspect}"
     end
     
   end

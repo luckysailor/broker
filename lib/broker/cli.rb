@@ -43,6 +43,7 @@ module Broker
       
       if options[:create] && empty_dir
         FileUtils.mkdir Broker.options[:queue]
+        FileUtils.mkdir Broker.options[:processed_path]
         say "Your Q has been created at:"
         puts "#{Broker.options[:queue]}"
       end

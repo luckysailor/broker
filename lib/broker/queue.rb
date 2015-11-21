@@ -29,13 +29,14 @@ module Broker
     
     def success(payload)
       @processed +=1
-      move payload.pkg.file
+      move payload
     end
     
     private
     
-    def move(filepath)
-      # move file to processed location
+    def move(payload)
+      f = File.basename(payload.pkg.file)
+      FileUtils.mv payload.pkg.file, File.join(Broker.options[:processed_path],"/", f)
     end
     
   end

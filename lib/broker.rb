@@ -1,5 +1,5 @@
 require 'broker/version'
-require 'broker/session'
+#require 'broker/session'
 require 'yaml'
 
 module Broker
@@ -11,7 +11,7 @@ module Broker
     initializer: 'config/initializers/broker.rb',
     poll_interval: 300,
     queue: 'broker_queue',
-    queue_complete: 'broker_processed',
+    processed_path: 'broker_processed',
     file_ext: :csv,
     enqueued: []
   }
@@ -21,7 +21,7 @@ module Broker
   end
   
   @@secrets = @@secrets ||= load_config(DEFAULTS[:secrets_path])
-  @@tables  = @@tables  ||=load_config(DEFAULTS[:tables_path])
+  @@tables  = @@tables  ||= load_config(DEFAULTS[:tables_path])
   
   def self.options
     @options ||= DEFAULTS.dup
@@ -90,6 +90,10 @@ module Broker
   
   def self.queue=(val)
     options[:queue] = val
+  end
+  
+  def self.processed_path=(pa)
+    options[:processed_path] = pa
   end
   
   def self.poll_interval=(val)
