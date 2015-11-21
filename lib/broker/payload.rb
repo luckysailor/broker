@@ -17,16 +17,19 @@ module Broker
           file: single_path,
           dbid: nil,
           app: nil,
+          app_key: nil,
           table: nil
         }
         
+        # TODO: Rewrite!
+        # Sloppy, need a more elegant way to pop values off the stack
         slots = single_path.split("/")
         slots.pop
         t = slots.pop
         a = slots.pop        
         
         _id = Broker.lookup_tbid({app: a, table: t})
-        res[:dbid], res[:app], res[:table] = _id, Broker.lookup_appname(a), t
+        res[:dbid], res[:app], res[:app_key], res[:table] = _id, Broker.lookup_appname(a), a, t
         
         new(res).enqueue
       end
@@ -40,6 +43,7 @@ module Broker
       @pkg = OpenStruct.new(file: opt[:file],
                             dbid: opt[:dbid],
                             app: opt[:app],
+                            app_key: opt[:app_key],
                             table: opt[:table])                  
     end
    

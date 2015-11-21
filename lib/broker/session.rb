@@ -23,16 +23,29 @@ module Broker
         rescue => e
           puts e.message
           #raise ArgumentError
+        ensure
+          # We successfully logged into quickbase, but supplied an invalid app name
+          if @client && @client.errcode == "32"
+            @client.signOut
+            raise ArgumentError
+          end
         end
+      end
+      
+      def fire_event
+        raise NotImplementedError
       end
       
       def sign_out
         @client.signOut
       end
       
-      def change_app_to(name)
+      def qb_ready?(name)
         app_name = Broker.lookup_appname(name)
-        app_name && make_change(app_name, name)
+        unless app_name == @client.dbname
+          return app_name && change_app(app_name, name)
+        end
+        false
       end
     
       def get_field_names(table)
@@ -43,7 +56,7 @@ module Broker
       
       private
       
-      def make_change(app_name, app_key)
+      def change_app(app_name, app_key)
         @app = app_key.to_s
         @client.findDBByname(app_name)
         @client.dbname == app_name

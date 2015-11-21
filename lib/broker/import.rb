@@ -6,6 +6,7 @@ module Broker
    
       def fire_event(payload)
         @payload = payload
+        
         send(ext) if respond_to? ext
       end
       

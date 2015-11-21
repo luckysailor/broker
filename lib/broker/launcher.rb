@@ -1,6 +1,17 @@
 require 'broker/utility'
 
 module Broker
+  module Event
+    def register(arr)
+      unless arr.empty?
+        while !Broker.options[:enqueued].empty?
+          payload = Broker.options[:enqueued].shift
+          puts "#{payload.pkg.file} processed"
+        end
+      end
+    end
+  end
+  
   class Launcher
     
    def initialize
@@ -19,17 +30,6 @@ module Broker
      puts "launcher stopped"
    end 
     
-  end
-  
-  module Event
-    def register(arr)
-      unless arr.empty?
-        while !Broker.options[:enqueued].empty?
-          payload = Broker.options[:enqueued].shift
-          puts "#{payload.pkg.file} processed"
-        end
-      end
-    end
   end
   
   class Poller
