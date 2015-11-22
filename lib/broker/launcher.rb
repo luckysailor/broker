@@ -25,15 +25,18 @@ module Broker
       while !@queue.empty?
         payload = @queue.next
         results = payload.commit(session)
-        puts "#{results.inspect}"
-        @queue.success(payload)
+        results ? @queue.success(payload) : @queue.failure(payload)        
         # Need to handle failure and add payload to queues failed
         # Need to handle success and move file out and alert queue
       end
       puts "Session Terminated: #{session.sign_out}"
+      puts "****************************"
+      puts "Queue Status"
+      puts "****************************"
       puts "Processed: #{@queue.processed}"
       puts "Pending: #{@queue.pending.inspect}"
       puts "Failed: #{@queue.failed.inspect}"
+      puts "****************************"
     end
     
   end

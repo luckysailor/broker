@@ -27,18 +27,19 @@ module Broker
     
     def failure(payload)
       @failed << payload
+      move(payload, Broker.options[:failed_path])
     end
     
     def success(payload)
       @processed +=1
-      move payload
+      move(payload, Broker.options[:processed_path])
     end
     
     private
     
-    def move(payload)
+    def move(payload, dest)
       f = "#{timestamp}_#{File.basename(payload.pkg.file)}"
-      FileUtils.mv payload.pkg.file, File.join(Broker.options[:processed_path],"/", f)
+      FileUtils.mv payload.pkg.file, File.join(dest, "/", f)
     end
     
   end

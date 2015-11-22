@@ -12,6 +12,7 @@ module Broker
     poll_interval: 300,
     queue: 'broker_queue',
     processed_path: 'broker_processed',
+    failed_path: 'broker_failed',
     file_ext: :csv,
     enqueued: []
   }
@@ -94,6 +95,10 @@ module Broker
   
   def self.processed_path=(pa)
     options[:processed_path] = pa
+  end
+  
+  def self.failed_path=(pa)
+    options[:failed_path] = pa
   end
   
   def self.poll_interval=(val)

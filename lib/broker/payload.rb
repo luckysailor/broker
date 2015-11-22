@@ -3,7 +3,7 @@ require 'ostruct'
 module Broker
   class Payload
     
-    attr_reader :pkg
+    attr_accessor :pkg, :results
     
     class << self
     
@@ -36,6 +36,7 @@ module Broker
     end
     
     def initialize(opt={})
+      @response = nil
       @pkg = OpenStruct.new(file: opt[:file],
                             dbid: opt[:dbid],
                             app: opt[:app],
@@ -44,7 +45,42 @@ module Broker
     end
    
     def commit(session)
-      session.fire_event(self)
+      begin
+        capture_response(session.fire_event(self))
+      rescue => e
+        # Need to log the failed attempt somewhere
+        puts "#{pkg.file} failed to import!"
+        puts e.message
+        puts e.backtrace.join("\n")
+        capture_response("Failed to Import")
+        return nil
+      end
+      true
+    end
+    
+    def capture_response(results)
+      if results.respond_to?(:capitalize)
+        @response = results
+      else
+        parse_response(results)
+        puts "Captured Payload Result: #{@response.inspect}"
+      end
+    end
+    
+    # Quickbase API returns 2D array with results
+    # First Element -> [num created, num imported, num updated, raw xml, update_id]
+    # Second Element -> [invalid records that didn't get imported]
+    
+    def parse_response(results)
+      details = results.shift
+      res = {
+        records_imported: details[1],
+        records_created: details[0],
+        records_updated: details[2],
+        update_id: details[4],
+        invalid_records: results.shift
+      }
+      @response = res
     end
     
   end

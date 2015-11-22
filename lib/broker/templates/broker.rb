@@ -14,6 +14,9 @@ Broker.setup do |config|
   # Directory where your successful imported files will be moved
   config.processed_path = 'broker_processed'
   
+  # Directory where your failed imported files will be moved
+  config.failed_path = 'broker_failed'
+  
   # Uncomment to change the default file type to use for importing
   # [:csv, :tab]
   #config.file_ext = :csv
