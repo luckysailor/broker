@@ -44,7 +44,7 @@ Once running, Broker will poll for new files in a directory structure that resem
 
 1. Edit the initializer file in `/config/initializers/broker.rb` to customize the location you want the Queue to be generated, along with changing the default locations for your secrets.yml and quickbase_tables.yml to be.
 
-2. Open up your quickbase_tables.yml configuration file and enter your quickbase app/table structure. This convention must be strictly followed as it is the way Broker is able to connect with Quickbase. Create as many app config blocks as you need.
+2. Open up your `quickbase_tables.yml` configuration file and enter your quickbase app/table structure. This convention must be strictly followed as it is the way Broker is able to connect with Quickbase. Create as many app config blocks as you need.
 
 ```ruby
 tracker:									# Give each of your apps a simple unique key name
