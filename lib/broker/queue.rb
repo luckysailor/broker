@@ -1,7 +1,9 @@
 require 'broker/payload'
+require 'broker/utility'
 
 module Broker
   class Queue
+    include Broker::Utility
     
     attr_reader :processed, :pending, :failed
     
@@ -35,7 +37,7 @@ module Broker
     private
     
     def move(payload)
-      f = File.basename(payload.pkg.file)
+      f = "#{timestamp}_#{File.basename(payload.pkg.file)}"
       FileUtils.mv payload.pkg.file, File.join(Broker.options[:processed_path],"/", f)
     end
     

@@ -1,14 +1,14 @@
 <% Broker.tables.each do |table, vals| %>
 <div class="row header">
   <div class="col-sm-12">
-    <h3><span class="title"><%= vals['name'] %></span> URL: <%= "/import/#{table}/[table_name]" %></h3>
+    <h3><span class="title"><%= vals['name'] %></span></h3>
 	<h4>Token: <%= vals['token'] %></h4>
 	<table class="workers table table-hover table-bordered table-striped table-white">
 		<thead>
 				<tr>
 					<th>Table Name</th>
 					<th>ID #</th>
-					<th>View Fields</th>					
+					<th>Broker Path</th>					
 				</tr>
 		</thead>
 		<tbody>
@@ -16,7 +16,7 @@
 			<tr>
 				<td><%= key %></td>
 				<td><%= val %></td>
-				<td><a href="/exports?app=<%= table %>&table=<%= key %>">View</a></td>
+				<td><%= "#{Broker.options[:queue]}/#{table}/#{key}" %></td>
 			</tr>
 			<% end %>
 		</tbody>

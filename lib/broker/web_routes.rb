@@ -1,5 +1,5 @@
-require 'broker/import'
-require 'broker/export'
+# require 'broker/import'
+# require 'broker/export'
 
 module Broker
   module WebRoutes
@@ -13,16 +13,17 @@ module Broker
       end
     
       app.get '/exports' do
-        db = params['table']
-        app = params['app']
+        # db = params['table']
+#         app = params['app']
+#         @fields = []
+#         @header = "Exports"
+#         if db && app
+#           qb = Broker::Export.new(:app => app)
+#           @fields = qb.get_field_names(db)
+#           @header = "App: #{app.downcase} | Table: #{db.capitalize}"
+#           qb.sign_out
+#         end
         @fields = []
-        @header = "Exports"
-        if db && app
-          qb = Broker::Export.new(:app => app)
-          @fields = qb.get_field_names(db)
-          @header = "App: #{app.downcase} | Table: #{db.capitalize}"
-          qb.sign_out
-        end
         erb :exports
       end
       

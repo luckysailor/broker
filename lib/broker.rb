@@ -3,7 +3,7 @@ require 'broker/version'
 require 'yaml'
 
 module Broker
-  NAME = "Broker: Quickbase Data Intake"
+  NAME = "Broker"
   
   DEFAULTS = {
     secrets_path: 'config/secrets.yml',

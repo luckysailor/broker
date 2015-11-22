@@ -12,6 +12,10 @@ module Broker
        watcher(name, &block)
      end
    end
+   
+   def timestamp
+     Time.now.strftime("%Y-%m-%dT%H.%M.%S")
+   end
     
   end
 end

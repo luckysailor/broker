@@ -154,9 +154,17 @@ module Broker
       say ""
       say "*************************************************"
       say ""
-      say "Update your Broker Q by running:"
+      say "Create your Broker Q by running:"
       say ""
-      say "$ broker update_q"
+      say "$ broker queue -c"
+      say ""
+      say "Populate your Broker Q by running:"
+      say ""
+      say "$ broker queue -u"
+      say ""
+      say "Boot Broker"
+      say ""
+      say "$ broker start -s"
       say ""
     end
     
@@ -193,7 +201,6 @@ module Broker
         return false unless File.exists?(f)
       end && true
     end
-    
     
   end
 end
