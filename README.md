@@ -36,7 +36,22 @@ The following files will be generated for you:
 /config/secrets.yml
 /config/quickbase_tables.yml
 /config/initializers/broker.rb
-````
+```
+
+Enter your Quickbase connection credentials in `/config/secrets.yml` file.
+
+```ruby
+ # Place your quickbase credentials here
+ # Do not check into version control, keep your secrets safe
+ #
+ # ORG -> if you are using a custom subdomain such as mycompany.quickbase.com,
+ # you will set ORG:  mycompany, otherwise www is the default
+ #
+ #
+ ORG:  www
+ USERNAME:  billy_the_kid@user.com
+ PASSWORD:  mickeymouse
+```
 
 ## Generate the Queue
 
@@ -55,7 +70,7 @@ tracker:									# Give each of your apps a simple unique key name
     people:  table_dbid
 ```
 
-3. Once you `quickbase_table.yml` configuration is done, you are ready to generate the Broker Queue.
+3. Once your `quickbase_table.yml` configuration is done, you are ready to generate the Broker Queue.
 
 ```ruby
 $ broker queue -c
@@ -80,6 +95,16 @@ $ broker start -s
 
 Broker will be running and watching for new files inside your Queue. New files will be swept up, imported to Quickbase, and then moved out to the Processed folder.
 
+
+## In the Works
+
+1. Broker activity - successful/failed import records save to a MongoDB
+
+2. Web UI to monitor Broker activity
+
+3. Mount Broker to a Rails App
+
+4. 
 
 
 ## Contributing
