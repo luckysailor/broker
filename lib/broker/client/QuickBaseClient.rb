@@ -1499,7 +1499,7 @@ class Client
    
    # shenley - gem's method was flawed and removed nil values, used CSV lib to separate correctly
    def splitString(string, fieldSeparator = ",")
-     string &&= string.encode("UTF-8", "binary", :invalid => :replace, :undef => :replace, :replace => "")
+     string &&= string.chomp.encode("UTF-8", "binary", :invalid => :replace, :undef => :replace, :replace => "")
      CSV.parse(string, :col_sep => fieldSeparator).shift
    end
    

@@ -105,8 +105,8 @@ module Broker
     options[:poll_interval] = val
   end
   
-  def file_ext=(val)
-    options[:file_ext] = val if [:csv, :tab].include? val
+  def self.file_ext=(val)
+    options[:file_ext] = val if [:csv, :txt].include? val
   end
   
 end

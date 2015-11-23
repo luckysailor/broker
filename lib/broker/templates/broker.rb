@@ -18,7 +18,7 @@ Broker.setup do |config|
   config.failed_path = 'broker_failed'
   
   # Uncomment to change the default file type to use for importing
-  # [:csv, :tab]
+  # [:csv, :txt]
   #config.file_ext = :csv
   
   # Sets polling wait time before checking for new import files
