@@ -1499,7 +1499,7 @@ class Client
    
    # shenley - gem's method was flawed and removed nil values, used CSV lib to separate correctly
    def splitString(string, fieldSeparator = ",")
-     string &&= string.chomp.encode("UTF-8", "binary", :invalid => :replace, :undef => :replace, :replace => "")
+     string &&= string.encode("UTF-8", "binary", :invalid => :replace, :undef => :replace, :replace => "")
      CSV.parse(string, :col_sep => fieldSeparator).shift
    end
    
@@ -4476,8 +4476,12 @@ class Client
                   csvdata = ""
                   validLines.each{ |line| 
                      if line 
-                        csvdata << line.join( ',' ) 
-                        csvdata << "\n"
+                       csvdata << line.to_csv
+                        # these 2 lines don't handle columns with commas, ex "My field, needs escaped"
+                        # using CSV library's to_csv will correctly escape any quoted fields to preserve the commas 
+                        # and not mistake them for wrong fields
+                        #csvdata << line.join( ',' ) 
+                        #csvdata << "\n"
                      end
                   }
                   clist = targetFieldIDs.join( '.' )
