@@ -6,11 +6,11 @@ end
 
 module Broker
   class Application
-    
+
     def self.boot!      
       puts "starting up"
       puts "watching for files in #{Broker.options[:queue]}"
     end
     
-  end
+  end    
 end
